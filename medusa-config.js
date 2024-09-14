@@ -36,8 +36,7 @@ const DATABASE_URL =
 
 const REDIS_URL = process.env.REDIS_URL || 'redis://localhost:6379'
 
-const STRIPE_API_KEY =
-  'sk_test_51PqEmCCtuvD5zLFc0pwI8wVt5VxIV2Cj8yMjv5P2ly7fxGlDRlKxJP51lw6aco9zZ17K0IKh4qfKagbzzjTXXjCx003I3yF767'
+const STRIPE_API_KEY = process.env.STRIPE_API_KEY
 
 const plugins = [
   `medusa-fulfillment-manual`,
