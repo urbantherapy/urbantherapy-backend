@@ -37,10 +37,11 @@
     "cors": "^2.8.5",
     "dotenv": "16.3.1",
     "express": "^4.17.2",
+    "medusa-custom-attributes": "^1.0.19",
     "medusa-fulfillment-manual": "latest",
     "medusa-interfaces": "latest",
     "medusa-payment-manual": "latest",
-    "medusa-payment-stripe": "latest",
+    "medusa-payment-stripe": "^6.0.11",
     "prism-react-renderer": "^2.0.4",
     "typeorm": "^0.3.16"
   },
