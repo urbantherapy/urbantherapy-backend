@@ -28,20 +28,16 @@ const ADMIN_CORS =
 // CORS to avoid issues when consuming Medusa from a client
 const STORE_CORS = process.env.STORE_CORS || 'http://localhost:8000'
 
-// const DATABASE_URL =
-//   process.env.DATABASE_URL || "postgres://localhost/medusa-starter-default";
-
-const DB_USERNAME = process.env.DB_USERNAME
-const DB_PASSWORD = process.env.DB_PASSWORD
-const DB_HOST = process.env.DB_HOST
-const DB_PORT = process.env.DB_PORT
-const DB_DATABASE = process.env.DB_DATABASE
-
+// Database configuration
 const DATABASE_URL =
-  `postgres://${DB_USERNAME}:${DB_PASSWORD}` +
-  `@${DB_HOST}:${DB_PORT}/${DB_DATABASE}`
+  process.env.DATABASE_URL ||
+  `postgres://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}` +
+    `@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`
 
 const REDIS_URL = process.env.REDIS_URL || 'redis://localhost:6379'
+
+const STRIPE_API_KEY =
+  'sk_test_51PqEmCCtuvD5zLFc0pwI8wVt5VxIV2Cj8yMjv5P2ly7fxGlDRlKxJP51lw6aco9zZ17K0IKh4qfKagbzzjTXXjCx003I3yF767'
 
 const plugins = [
   `medusa-fulfillment-manual`,
@@ -53,6 +49,13 @@ const plugins = [
     },
   },
   {
+    resolve: `medusa-payment-stripe`,
+    options: {
+      api_key: STRIPE_API_KEY,
+      // webhook_secret: process.env.STRIPE_WEBHOOK_SECRET,
+    },
+  },
+  {
     resolve: '@medusajs/admin',
     /** @type {import('@medusajs/admin').PluginOptions} */
     options: {
@@ -60,6 +63,16 @@ const plugins = [
       autoRebuild: true,
       develop: {
         open: process.env.OPEN_BROWSER !== 'false',
+      },
+    },
+  },
+  {
+    resolve: `medusa-custom-attributes`,
+    options: {
+      enableUI: true,
+      projectConfig: {
+        store_cors: STORE_CORS,
+        admin_cors: ADMIN_CORS,
       },
     },
   },
@@ -80,6 +93,11 @@ const modules = {
   },*/
 }
 
+const database_extra =
+  process.env.NODE_ENV === 'production'
+    ? { ssl: { rejectUnauthorized: false } }
+    : {}
+
 /** @type {import('@medusajs/medusa').ConfigModule["projectConfig"]} */
 const projectConfig = {
   jwt_secret: process.env.JWT_SECRET || 'supersecret',
@@ -87,7 +105,7 @@ const projectConfig = {
   store_cors: STORE_CORS,
   database_url: DATABASE_URL,
   admin_cors: ADMIN_CORS,
-  database_extra: { ssl: { rejectUnauthorized: false } },
+  database_extra,
   // Uncomment the following lines to enable REDIS
   // redis_url: REDIS_URL
 }
