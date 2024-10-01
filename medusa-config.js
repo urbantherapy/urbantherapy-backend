@@ -36,8 +36,6 @@ const DATABASE_URL =
 
 const REDIS_URL = process.env.EVENTS_REDIS_URL || 'redis://localhost:6379'
 
-console.log('REDIS_URL', REDIS_URL)
-
 const STRIPE_API_KEY = process.env.STRIPE_API_KEY
 
 const plugins = [
