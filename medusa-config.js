@@ -83,7 +83,6 @@ const plugins = [
       region: process.env.SES_REGION,
       from: process.env.SES_FROM,
       template_path: process.env.SES_TEMPLATE_PATH,
-      partial_path: process.env.SES_PARTIAL_PATH,
       // optional string containing email address separated by comma
       order_placed_cc: 'office@urbantherapy.be',
       enable_endpoint: process.env.SES_ENABLE_ENDPOINT,
