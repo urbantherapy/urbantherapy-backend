@@ -90,9 +90,9 @@ const plugins = [
 
       // enable_sim_mode: process.env.SES_ENABLE_SIM_MODE,
       order_placed_template: 'order_placed',
-      order_shipped_template: 'order_shipped',
-      user_password_reset_template: 'user_password_reset',
-      gift_card_created_template: 'gift_card_created',
+      // order_shipped_template: 'order_shipped',
+      // user_password_reset_template: 'user_password_reset',
+      // gift_card_created_template: 'gift_card_created',
     },
   },
 ]
