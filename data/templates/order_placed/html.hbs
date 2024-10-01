@@ -1,0 +1,109 @@
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>Order Confirmation</title>
+    <style>
+      body { font-family: Arial, sans-serif; line-height: 1.6; color: #333;
+      max-width: 600px; margin: 0 auto; padding: 20px; } h1 { color: #4a5568;
+      font-size: 24px; font-weight: normal; margin-top: 16px; } p { font-size:
+      14px; margin-top: 16px; } .product { display: flex; border-bottom: 1px
+      solid #e2e8f0; padding: 20px 0; } .product img { width: 80px; height:
+      80px; object-fit: cover; margin-right: 20px; } .product-details {
+      flex-grow: 1; } .product-name { font-weight: bold; color: #1a202c; }
+      .product-description { font-size: 12px; color: #4a5568; margin-top: 8px; }
+      .product-info { display: flex; justify-content: space-between; margin-top:
+      12px; font-size: 12px; } .address { margin-top: 20px; } .address h4 {
+      font-size: 14px; margin-bottom: 8px; } .address p { font-size: 12px;
+      margin: 0; } .summary { margin-top: 20px; font-size: 12px; } .summary-item
+      { display: flex; justify-content: space-between; margin-bottom: 8px; }
+    </style>
+  </head>
+  <body>
+    <h1>Thank You for Your Order</h1>
+    <p>
+      Your order has been placed successfully! We're thrilled to have you as
+      part of our Urban Therapy community. Your support helps us empower makers
+      and promote sustainable, handcrafted creations.
+    </p>
+    <p>
+      Keep an eye on your inbox for updates, and get ready to enjoy something
+      truly special.
+    </p>
+    <p>Anis & Céline</p>
+
+    <div style='margin-top: 40px; border-top: 1px solid #e2e8f0;'>
+      <h2 style='font-size: 18px;'>Your Order</h2>
+
+      {{#each items}}
+        <div class='product'>
+          <img
+            src='{{variant.product.thumbnail}}'
+            alt='{{variant.product.title}}'
+          />
+          <div class='product-details'>
+            <div class='product-name'>{{variant.product.title}}</div>
+            <div class='product-description'>{{description}}</div>
+            <div class='product-info'>
+              <div>Quantity: {{quantity}}</div>
+              <div>Price: {{unit_price}}</div>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+
+      <div style='margin-left: 100px;'>
+        <div class='address'>
+          <h4>Shipping address</h4>
+          <p>{{shipping_address.first_name}} {{shipping_address.last_name}}</p>
+          <p>{{shipping_address.address_1}}</p>
+          <p>{{shipping_address.city}},
+            {{shipping_address.province}}
+            {{shipping_address.postal_code}}</p>
+        </div>
+
+        <div class='address'>
+          <h4>Billing address</h4>
+          <p>{{shipping_address.first_name}} {{shipping_address.last_name}}</p>
+          <p>{{shipping_address.address_1}}</p>
+          <p>{{shipping_address.city}},
+            {{shipping_address.province}}
+            {{shipping_address.postal_code}}</p>
+        </div>
+
+        <div class='address'>
+          <h4>Payment method</h4>
+          <p>{{payments.0.provider_id}}</p>
+          <p>•••• •••• •••• {{payments.0.data.last4}}</p>
+        </div>
+
+        <div class='address'>
+          <h4>Shipping method</h4>
+          <p>{{shipping_methods.0.shipping_option.name}}</p>
+          <p>{{shipping_methods.0.shipping_option.data.description}}</p>
+        </div>
+
+        <div class='summary'>
+          <div class='summary-item'>
+            <span>Subtotal</span>
+            <span>{{subtotal}}</span>
+          </div>
+          {{#if discounts}}
+            <div class='summary-item'>
+              <span>Discount ({{discounts.0.code}})</span>
+              <span>{{discount_total}}</span>
+            </div>
+          {{/if}}
+          <div class='summary-item'>
+            <span>Shipping</span>
+            <span>{{shipping_total}}</span>
+          </div>
+          <div class='summary-item' style='font-weight: bold;'>
+            <span>Total</span>
+            <span>{{total}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
