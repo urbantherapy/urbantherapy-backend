@@ -34,7 +34,9 @@ const DATABASE_URL =
   `postgres://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}` +
     `@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`
 
-const REDIS_URL = process.env.REDIS_URL || 'redis://localhost:6379'
+const REDIS_URL = process.env.EVENTS_REDIS_URL || 'redis://localhost:6379'
+
+console.log('REDIS_URL', REDIS_URL)
 
 const STRIPE_API_KEY = process.env.STRIPE_API_KEY
 
@@ -75,16 +77,42 @@ const plugins = [
       },
     },
   },
+  {
+    resolve: 'medusa-plugin-ses',
+    options: {
+      access_key_id: process.env.SES_ACCESS_KEY_ID,
+      secret_access_key: process.env.SES_SECRET_ACCESS_KEY,
+      region: process.env.SES_REGION,
+      from: process.env.SES_FROM,
+      template_path: process.env.SES_TEMPLATE_PATH,
+      partial_path: process.env.SES_PARTIAL_PATH,
+      // optional string containing email address separated by comma
+      order_placed_cc: 'office@urbantherapy.be',
+      enable_endpoint: process.env.SES_ENABLE_ENDPOINT,
+
+      // enable_sim_mode: process.env.SES_ENABLE_SIM_MODE,
+      order_placed_template: 'order_placed',
+      order_shipped_template: 'order_shipped',
+      user_password_reset_template: 'user_password_reset',
+      gift_card_created_template: 'gift_card_created',
+    },
+  },
 ]
 
 const modules = {
-  /*eventBus: {
-    resolve: "@medusajs/event-bus-redis",
+  // eventBus: {
+  //   resolve: '@medusajs/event-bus-local',
+  //   options: {
+  //     redisUrl: REDIS_URL
+  //   }
+  // },
+  eventBus: {
+    resolve: '@medusajs/event-bus-redis',
     options: {
-      redisUrl: REDIS_URL
-    }
+      redisUrl: process.env.EVENTS_REDIS_URL,
+    },
   },
-  cacheService: {
+  /* cacheService: {
     resolve: "@medusajs/cache-redis",
     options: {
       redisUrl: REDIS_URL
@@ -106,7 +134,7 @@ const projectConfig = {
   admin_cors: ADMIN_CORS,
   database_extra,
   // Uncomment the following lines to enable REDIS
-  // redis_url: REDIS_URL
+  redis_url: REDIS_URL,
 }
 
 /** @type {import('@medusajs/medusa').ConfigModule} */
