@@ -25,6 +25,7 @@
     "dev": "cross-env npm run build:server && medusa develop"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.662.0",
     "@medusajs/admin": "^7.1.14",
     "@medusajs/cache-inmemory": "latest",
     "@medusajs/cache-redis": "^1.9.1",
@@ -39,6 +40,7 @@
     "dotenv": "16.3.1",
     "express": "^4.17.2",
     "medusa-custom-attributes": "^1.0.19",
+    "medusa-file-s3": "^1.4.2",
     "medusa-fulfillment-manual": "latest",
     "medusa-interfaces": "latest",
     "medusa-payment-manual": "latest",
